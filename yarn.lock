@@ -12375,8 +12375,8 @@ react-side-effect@^1.1.0:
     exenv "^1.2.1"
     shallowequal "^1.0.1"
 
-"react-static@file:packages/react-static":
-  version "7.2.3"
+"react-static@file:packages/react-static-plugin-reach-router/../react-static", "react-static@file:packages/react-static-plugin-react-location/../react-static", "react-static@file:packages/react-static-plugin-react-router/../react-static", "react-static@file:packages/react-static-plugin-sitemap/../react-static", "react-static@file:packages/react-static-plugin-source-filesystem/../react-static", "react-static@file:packages/react-static-plugin-typescript/../react-static":
+  version "7.4.0"
   dependencies:
     "@babel/cli" "^7.5.5"
     "@babel/core" "^7.5.5"

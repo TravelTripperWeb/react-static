@@ -11,8 +11,8 @@ import {
 } from '../utils'
 import plugins from './plugins'
 
-export const rebuildRoutes = () => {
-  rebuildRoutes.current()
+export const rebuildRoutes = async (state) => {
+  return await rebuildRoutes.current(state)
 }
 
 rebuildRoutes.current = () => {
@@ -20,16 +20,16 @@ rebuildRoutes.current = () => {
 }
 
 export default async function getRoutes(state, callback = d => d) {
-  rebuildRoutes.current = async () => {
-    const { silent, incremental } = state
+  rebuildRoutes.current = async (latestState) => {
+    const { silent, incremental } = latestState
 
     if (!silent) console.log('Building Routes...')
     if (!silent) time(chalk.green('[\u2713] Routes Built'))
 
-    state = await plugins.beforePrepareRoutes(state)
+    latestState = await plugins.beforePrepareRoutes(latestState)
 
-    const pluginRoutes = await plugins.getRoutes([], state)
-    const userRoutes = await state.config.getRoutes(state)
+    const pluginRoutes = await plugins.getRoutes([], latestState)
+    const userRoutes = await latestState.config.getRoutes(latestState)
 
     const routes = [...pluginRoutes, ...userRoutes]
 
@@ -38,7 +38,7 @@ export default async function getRoutes(state, callback = d => d) {
       routes: allNormalizedRoutes,
       hasIndex,
       has404,
-    } = normalizeAllRoutes(routes, state)
+    } = normalizeAllRoutes(routes, latestState)
 
     // If no Index page was found, throw an error. This is required
     if (!hasIndex && !incremental) {
@@ -67,15 +67,15 @@ export default async function getRoutes(state, callback = d => d) {
 
     if (!silent) timeEnd(chalk.green('[\u2713] Routes Built'))
 
-    state = {
-      ...state,
+    latestState = {
+      ...latestState,
       routes: allNormalizedRoutes,
     }
 
-    return callback(await plugins.afterPrepareRoutes(state))
+    return callback(await plugins.afterPrepareRoutes(latestState))
   }
 
-  return rebuildRoutes.current()
+  return await rebuildRoutes.current(state)
 }
 
 // We recursively loop through the routes and their children and

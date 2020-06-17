@@ -3,7 +3,7 @@ const { default: start } = require('../lib/commands/start')
 const { default: build } = require('../lib/commands/build')
 const { default: bundle } = require('../lib/commands/bundle')
 const { default: exporter } = require('../lib/commands/export')
-const { reloadClientData } = require('../lib/static/webpack/runDevServer')
+const { reloadClientData, rebuildSiteData } = require('../lib/static/webpack/runDevServer')
 const { default: makePageRoutes } = require('../lib/node/makePageRoutes')
 const { default: getWebpackConfig } = require('../lib/node/getWebpackConfig')
 const { normalizeRoutes } = require('../lib/static/getConfig')
@@ -17,9 +17,10 @@ module.exports = {
   bundle,
   export: exporter,
   reloadClientData,
+  rebuildSiteData,
   makePageRoutes,
   getWebpackConfig,
   normalizeRoutes,
   createSharedData,
-  rebuildRoutes,
+  rebuildRoutes
 }
