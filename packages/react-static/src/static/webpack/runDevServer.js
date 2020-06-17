@@ -16,13 +16,13 @@ let buildDevRoutes = () => {}
 
 export const rebuildSiteData = async () => {
   if (rebuildSiteData.current) {
-    return await rebuildSiteData.current();
+    return rebuildSiteData.current();
   }
 }
 
 export const reloadClientData = async () => {
   if (reloadClientData.current) {
-    return await reloadClientData.current()
+    return reloadClientData.current()
   }
 }
 

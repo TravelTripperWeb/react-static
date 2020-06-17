@@ -11,8 +11,8 @@ import {
 } from '../utils'
 import plugins from './plugins'
 
-export const rebuildRoutes = async (state) => {
-  return await rebuildRoutes.current(state)
+export const rebuildRoutes = async state => {
+  return rebuildRoutes.current(state)
 }
 
 rebuildRoutes.current = () => {
@@ -20,7 +20,7 @@ rebuildRoutes.current = () => {
 }
 
 export default async function getRoutes(state, callback = d => d) {
-  rebuildRoutes.current = async (latestState) => {
+  rebuildRoutes.current = async latestState => {
     const { silent, incremental } = latestState
 
     if (!silent) console.log('Building Routes...')
@@ -75,7 +75,7 @@ export default async function getRoutes(state, callback = d => d) {
     return callback(await plugins.afterPrepareRoutes(latestState))
   }
 
-  return await rebuildRoutes.current(state)
+  return rebuildRoutes.current(state)
 }
 
 // We recursively loop through the routes and their children and
