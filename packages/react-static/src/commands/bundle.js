@@ -8,6 +8,7 @@ import extractTemplates from '../static/extractTemplates'
 import generateTemplates from '../static/generateTemplates'
 import cleanProjectFiles from '../static/cleanProjectFiles'
 import copyPublicFiles from '../static/copyPublicFiles'
+import fetchSiteData from '../static/fetchSiteData'
 import { outputBuildState } from '../static/buildState'
 
 export default (async function bundle(state = {}) {
@@ -28,6 +29,7 @@ export default (async function bundle(state = {}) {
 
   state = await getConfig(state)
   state = await cleanProjectFiles(state)
+  state = await fetchSiteData(state)
   state = await generateBrowserPlugins(state)
   state = await getRoutes(state)
   state = await extractTemplates(state)
